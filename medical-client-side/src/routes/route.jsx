@@ -5,7 +5,7 @@ import HistoryLog from '../Pages/HistoryLog'
 import Dashboard from '../Pages/Dashboard'
 
 
-const routes = createBrowserRouter({
+const route = createBrowserRouter({
     path: '/',
     element: <App />,
     children: [
@@ -27,4 +27,4 @@ const routes = createBrowserRouter({
 })
 
 
-export default routes
+export default route
