@@ -71,7 +71,6 @@ const removeStock=async(req,res)=>{
             error:true
         })
     }
-
 }
 
 

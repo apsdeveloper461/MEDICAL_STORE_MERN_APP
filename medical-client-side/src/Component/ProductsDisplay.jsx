@@ -5,8 +5,15 @@ import { FaHistory } from "react-icons/fa";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { FaRegEdit } from "react-icons/fa";
 import Loading from './Loading';
+import UpdateProductForm from './UpdateProductForm';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 function ProductsDisplay({ products,selectedCategory,toggleFormDisplay,isloading }) {
+  const naviate=useNavigate()
 const [productData,setproductData]=useState([])
+const [displayUpdateProductPage,setDisplayUpdateProductPage]=useState(false)
+const [displayUpdateProductForm,setDisplayUpdateProductForm]=useState(false)
+const [updateFormData,setUpdateFormData]=useState(null)
   useEffect(() => {
 console.log(selectedCategory);
 let productsAccordingToCategory = [];
@@ -18,15 +25,53 @@ if (selectedCategory === "") {
 //   console.log("productsAccordingToCategory",productsAccordingToCategory);
   setproductData(productsAccordingToCategory);
 }
-
 // console.log("products ", productData);
-
 
   }, [selectedCategory,products]);
     const LogButtonClick = (e) => {
         console.log(e.target.id);
     }
+
+    const toggleUpdateProductForm = () => {
+        if (displayUpdateProductPage) {
+          setDisplayUpdateProductForm(false)
+          setTimeout(() => {
+            setDisplayUpdateProductPage(false)
+          }, 1000);
+        } else {
+          setDisplayUpdateProductPage(true)
+          setTimeout(() => {
+            setDisplayUpdateProductForm((prev) => !prev)
+          }, 0);
+        }
+    }
+const handleUpdateProduct=(productId)=>{
+    if(productId){
+        console.log("id",productId);
+        const UpdateFormData=productData.filter(f=>f._id === productId)
+        setUpdateFormData(UpdateFormData[0])
+        toggleUpdateProductForm()
+
+    }
+}
+const NaviateToHistoryLog=(productId)=>{
+
+  // const productId=e.target.value;
+  console.log("productId",productId)
+  if(productId){
+    const payload={
+      product_id:productId
+    }
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/customlog`,payload).then(res=>{
+        const LOGDATA=res?.data?.log
+        console.log(LOGDATA);
+        naviate('/log',{state:LOGDATA})
+    }).catch(err=>console.log(err))
+  }
+
+}
     return (
+        <>
         <div className=' w-full my-3 rounded-md overflow-x-auto   shadow-sm shadow-gray-700' style={{
             background: '#2B3C46', height: '76%'
         }}>
@@ -52,23 +97,41 @@ if (selectedCategory === "") {
                     {!isloading && productData.length != 0 && productData.map((product, index) => {
                         return (
                             <tr className='flex items-center shrink-0   px-5 py-2 font-light bg-gray-500 bg-opacity-15 hover:bg-gray-400 hover:bg-opacity-15 border-b-2 border-gray-600' key={product._id}>
-                                <td className='w-40 text-left flex gap-4 justify-center'><FaHistory style={{ color: '#078D8C' }} className='w-6 cursor-pointer  text-xl rounded-full hover:text-lg' /> <FaRegEdit style={{ color: '#078D8C' }} className='w-6 cursor-pointer  text-xl  hover:text-lg' /></td>
+                                <td className='w-40 text-left flex gap-4 justify-center'>
+                                  
+                                  <FaHistory onClick={()=>NaviateToHistoryLog(product._id) }  style={{ color: '#078D8C' }} className='w-6 cursor-pointer  text-xl rounded-full hover:text-lg' /> 
+                                
+
+                                <FaRegEdit  onClick={()=>handleUpdateProduct(product._id)} style={{ color: '#078D8C' }} className=' w-6 cursor-pointer  text-xl  hover:text-lg' />
+                                
+                                </td>
                                 <td className='w-16 text-left'> {index + 1}</td>
                                 <td className='w-96 text-left '>{product.name}</td>
                                 <td className='w-36 text-left '>{product.stock}</td>
                                 <td className='w-36 text-left '>{product.category}</td>
                                 <td className='w-32 text-left '>{product.price}</td>
-                                <td className=' w-64 text-left '>{moment(product.createdAt).format('LLLL')}</td>
-                                <td className='w-64 text-left '>{moment(product.updatedAt).format('LLLL')}</td>
+                                <td className=' w-64 text-left '>{product.created}</td>
+                                <td className='w-64 text-left '>{product.updated}</td>
                                 <td className='w-24 text-left '><button id={product._id} onClick={LogButtonClick} style={{ background: '#078D8C' }} className=' outline-none  text-md py-0.5 px-2 rounded-md font-semibold text-white hover:-translate-y-1 hover:transition-transform hover:text-gray-400'>view Log</button></td>
                             </tr>
                         )
                     })}
+                    {
+                      productData.length == 0 && 
+                      <div className='relative w-screen mt-36 text-center'>
+                        <span className='text-xl'>No Result Found</span>
+                      </div>
+                    }
                   
                 </tbody>
             </table>
         </div>
+        {displayUpdateProductPage && 
+            <UpdateProductForm toggleFormDisplay={toggleUpdateProductForm} toggleForm={displayUpdateProductForm} FormData={updateFormData}/>
+        }
+        </>
     )
+
 }
 
 export default ProductsDisplay

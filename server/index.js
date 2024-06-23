@@ -9,6 +9,8 @@ require('dotenv').config()
 const { configDotenv } = require('dotenv');
 const DBconnection = require('./config/DBconnection');
 const router = require('./router/route');
+const { stockHistoryModel } = require('./models/StockHistoryModel');
+const { productModel } = require('./models/productModel');
 
 app.use(express.json())
  app.use(cors())
@@ -31,6 +33,12 @@ app.get('/',(req,res)=>{
 app.use('/store',router)
 
  //listen
+// const log=async()=>{
+   
+//    console.log("SalesData",salesStockData);
+  
+// }
+// log()
 
  DBconnection().then(()=>{
     app.listen(PORT,()=>{

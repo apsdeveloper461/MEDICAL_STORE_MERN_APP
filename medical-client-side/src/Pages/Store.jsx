@@ -4,6 +4,9 @@ import Navbar from '../Component/Navbar'
 import Search from '../Component/Search';
 import ProductsDisplay from '../Component/ProductsDisplay';
 import { IoAddCircle } from "react-icons/io5";
+import { TbRefreshDot } from "react-icons/tb";
+import { MdTableRows } from "react-icons/md";
+import { GoDotFill } from "react-icons/go";
 import ProductForm from '../Component/ProductForm';
 
 function Store() {
@@ -43,8 +46,7 @@ function Store() {
 
 
   }
-  useEffect(() => {
-
+  const getDataFromBackend=()=>{
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/products`).then((res) => {
       setproductFromBackend(res.data.product)
       setsearchProduct(res.data.product)
@@ -52,8 +54,14 @@ function Store() {
     }).catch((err) => {
       console.log(err);
     })
-
+  }
+  useEffect(() => {
+      getDataFromBackend()
   }, []);
+  // RefreshDataHandler
+  const RefreshDataHandler=()=>{
+    getDataFromBackend()
+  }
   // toggleAddProductForm
   const toggleAddProductForm = () => {
     if (isShowAddProductPage) {
@@ -79,8 +87,8 @@ function Store() {
 
   return (
     <>
-      <Navbar />
 
+<Navbar greeting={'Welcome to Product Page'}/>
       <div className="row relative flex flex-row items-center justify-between px-1 ">
         <div className="part1 w-9/12 rounded-md ml-2 h-10 flex items-center justify-between mx-3 px-3" style={{ background: '#2B3C46' }}>
 
@@ -102,15 +110,24 @@ function Store() {
             <option value="Injections">Injections</option>
             <option value="Vaccines">Vaccines</option>
             <option value="Surgical">Surgical</option>
+            <option value="First Aid">First Aid</option>
             <option value="Medical_devices">Medical Devices</option>
           </select>
         </div>
       </div>
+      <div className='h-6 relative w-full  mt-2 -mb-2 flex justify-end items-center'>
+        <MdTableRows className='text-xl  hover:text-emerald-700 w-6 cursor-pointer hover:text-lg'/>
+        <div className='mr-4'>{productFromBackend.length}</div>
+        <GoDotFill className='text-sm'/>
+        <div className='text-sm px-2'>Refresh        </div>
+        <TbRefreshDot className='text-xl mr-3 hover:text-emerald-700 w-6 cursor-pointer hover:text-lg' onClick={RefreshDataHandler}/>
+
+      </div>
+      <ProductsDisplay products={searchProduct} selectedCategory={category} toggleFormDisplay={toggleAddProductForm} isloading={isLoading} />
+
       {isShowAddProductPage &&
         <ProductForm toggleFormDisplay={toggleAddProductForm} toggleForm={isShowAddProductForm} />
       }
-      <ProductsDisplay products={searchProduct} selectedCategory={category} toggleFormDisplay={toggleAddProductForm} isloading={isLoading} />
-
 
     </>
   )

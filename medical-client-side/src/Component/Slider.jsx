@@ -26,7 +26,7 @@ function Slider() {
     }
     return (
         <>
-            <div className={`slider shadow-sm shadow-gray-600 h-5/6 flex flex-col absolute py-7 px-2 my-16 mx-2 ${border} bg-opacity-5`} style={{
+            <div className={`z-10 slider shadow-sm shadow-gray-600 h-5/6 flex flex-col absolute py-7 px-2 my-16 mx-2 ${border} bg-opacity-5`} style={{
                 background: '#1D2932',
             }} >
                 {
