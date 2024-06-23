@@ -11,12 +11,31 @@ function Store() {
   const [isShowAddProductPage, setIsShowAddProductPage] = useState(false)
   const [isShowAddProductForm, setIsShowAddProductForm] = useState(false)
   const [productFromBackend, setproductFromBackend] = useState([])
+  const [searchProduct, setsearchProduct] = useState([])
   const [category, setCategory] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [searchData, setSearchData] = useState('')
-  const changeSeacrhData = (e) => {
+  const changeSeacrhData = async (e) => {
+
+    setIsLoading(true)
     console.log(e.target.value);
     setSearchData(e.target.value)
+
+    setsearchProduct(searchFundtionOfProduct(searchData))
+    console.log("searchData", searchFundtionOfProduct(searchData));
+
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 1000);
   }
+  const searchFundtionOfProduct = (searchText) => {
+    const searchedData = productFromBackend.filter((product) => {
+      const productName = product.name.toLowerCase();
+      const searchQuery = searchText.toLowerCase();
+      return productName.includes(searchQuery);
+    });
+    return searchedData;
+  };
 
   const CategoriesOptionChange = () => {
     console.log(CategoriesOptionsRef.current.value);
@@ -28,6 +47,7 @@ function Store() {
 
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/products`).then((res) => {
       setproductFromBackend(res.data.product)
+      setsearchProduct(res.data.product)
       console.log(res.data.product);
     }).catch((err) => {
       console.log(err);
@@ -35,22 +55,22 @@ function Store() {
 
   }, []);
   // toggleAddProductForm
-  const toggleAddProductForm=()=>{
-    if(isShowAddProductPage){
+  const toggleAddProductForm = () => {
+    if (isShowAddProductPage) {
       setIsShowAddProductForm(false)
       setTimeout(() => {
         setIsShowAddProductPage(false)
-        
+
       }, 1000);
 
-      
-    }else{
+
+    } else {
       setIsShowAddProductPage(true)
       setTimeout(() => {
-        setIsShowAddProductForm((prev)=>!prev)
-        
+        setIsShowAddProductForm((prev) => !prev)
+
       }, 0);
-      
+
     }
     // callback()
     // console.log(document.querySelector('#AddProduct'));
@@ -87,9 +107,9 @@ function Store() {
         </div>
       </div>
       {isShowAddProductPage &&
-      <ProductForm  toggleFormDisplay={toggleAddProductForm}  toggleForm={isShowAddProductForm}/>
+        <ProductForm toggleFormDisplay={toggleAddProductForm} toggleForm={isShowAddProductForm} />
       }
-      <ProductsDisplay products={productFromBackend} category={category} toggleFormDisplay={toggleAddProductForm}/>
+      <ProductsDisplay products={searchProduct} selectedCategory={category} toggleFormDisplay={toggleAddProductForm} isloading={isLoading} />
 
 
     </>

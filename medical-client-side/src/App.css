@@ -70,7 +70,7 @@
     color: #666;
   }
   
-  input:focus, select:focus {
+  .ProductFormInput:focus{
     border: 1px solid #aaa;
     box-shadow: 0 0 0 3px #fff;
   }

@@ -6,6 +6,7 @@ const newproduct=async(req,res)=>{
    try {
        const {name,stock,category,price}=req.body;
        const findProductWithName=await productModel.findOne({name})
+       
        if(findProductWithName){
            console.log(findProductWithName,Boolean(findProductWithName))
            throw "Already Product Available"
