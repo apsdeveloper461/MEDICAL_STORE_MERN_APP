@@ -5,26 +5,28 @@ import HistoryLog from '../Pages/HistoryLog'
 import Dashboard from '../Pages/Dashboard'
 
 
-const route = createBrowserRouter({
-    path: '/',
-    element: <App />,
-    children: [
-        {
-            path: '',
-            element: <Dashboard />,
-            children: [
-                {
-                    path: 'store',
-                    element: <Store />
-                },
-                {
-                    path: 'log',
-                    element: <HistoryLog />
-                }
-            ]
-        }
-    ]
-})
+const routes = createBrowserRouter([
+    {
+        path: '/',
+        element: <App />,
+        children: [
+            {
+                path: '',
+                element: <Dashboard />,
+
+            },
+            {
+                path: 'store',
+                element: <Store />
+            },
+            {
+                path: 'log',
+                element: <HistoryLog />
+            }
+
+        ]
+    }
+])
 
 
-export default route
+export default routes

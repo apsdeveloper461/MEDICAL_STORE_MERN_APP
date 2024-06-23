@@ -1,0 +1,108 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+/* .slider::before{
+    content: '';
+    position: absolute;
+    top: -20px;
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    filter: blur(20px);
+    z-index: -1;
+} */
+ .slider{
+    filter: opacity(90%);
+    /* filter: contrast(100px); */
+ }
+
+
+ body{
+     min-width: 860px;
+     min-height: 650px;
+     /* height:calc(100vh + 100px); */
+     /* min-height:calc(100vw + 100px);
+     max-height:calc(100vw + 100px); */
+         background:#2B3C46;
+ }
+ .body{
+    padding-right: 30px;
+    overflow: hidden;
+    min-width: 800px;
+    /* max-width: 800px; */
+ }
+ .main{
+    min-height: 620px;
+    max-height: 620px;
+ }
+ .productForm{
+    min-height: 600px;
+    max-height: 700px;
+    height: 100vh;
+    transform: translateX(500px);
+    transition: all 2s ease-in-out .1s;
+ }
+
+.FormTransform{
+   transform: translateX(-0);
+   transition: all 2s ease-in-out .1s;
+}
+ .form-group {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  
+  .form-label {
+    position: absolute;
+    top: 0.5rem;
+    left: 1rem;
+    font-size: 1rem;
+    color: #999;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .form-label.focused {
+    transform: translateY(-1.5rem);
+    font-size: 0.8rem;
+    color: #666;
+  }
+  
+  input:focus, select:focus {
+    border: 1px solid #aaa;
+    box-shadow: 0 0 0 3px #fff;
+  }
+   
+@media screen and (max-height:400px) {
+    /* .body,body{
+        max-
+    } */
+    body,.body{
+        overflow-y: hidden;
+    }
+}
+ ::-webkit-scrollbar-corner{
+     background:#10161b91;
+    /* background: red; */
+}
+::-webkit-scrollbar{
+    width: 4px;
+    height: 12px;
+    background:#10161b91;
+    
+ }
+
+
+ /* ::-webkit-scrollbar-button{
+    background-color: white;
+ } */
+ ::-webkit-scrollbar-thumb{
+     margin: 10px;
+     padding:10px;
+     background:#101f29;
+     border-radius: 3px;
+     margin: 2px;
+     border: 2px solid #384b55;
+     box-shadow: 2px 3px -5px #ffffff;
+ }
