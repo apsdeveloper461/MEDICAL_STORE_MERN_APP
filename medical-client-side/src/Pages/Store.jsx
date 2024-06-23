@@ -8,6 +8,7 @@ import ProductForm from '../Component/ProductForm';
 
 function Store() {
   const CategoriesOptionsRef = useRef("General")
+  const [isShowAddProductPage, setIsShowAddProductPage] = useState(false)
   const [isShowAddProductForm, setIsShowAddProductForm] = useState(false)
   const [productFromBackend, setproductFromBackend] = useState([])
   const [category, setCategory] = useState('')
@@ -35,8 +36,24 @@ function Store() {
   }, []);
   // toggleAddProductForm
   const toggleAddProductForm=()=>{
-    setIsShowAddProductForm((prev)=>!prev)
-    // document.getElementById('AddProduct').classList.toggle('FormTransform')
+    if(isShowAddProductPage){
+      setIsShowAddProductForm(false)
+      setTimeout(() => {
+        setIsShowAddProductPage(false)
+        
+      }, 1000);
+
+      
+    }else{
+      setIsShowAddProductPage(true)
+      setTimeout(() => {
+        setIsShowAddProductForm((prev)=>!prev)
+        
+      }, 0);
+      
+    }
+    // callback()
+    // console.log(document.querySelector('#AddProduct'));
 
   }
 
@@ -69,8 +86,8 @@ function Store() {
           </select>
         </div>
       </div>
-      {isShowAddProductForm &&
-      <ProductForm  toggleFormDisplay={toggleAddProductForm}/>
+      {isShowAddProductPage &&
+      <ProductForm  toggleFormDisplay={toggleAddProductForm}  toggleForm={isShowAddProductForm}/>
       }
       <ProductsDisplay products={productFromBackend} category={category} toggleFormDisplay={toggleAddProductForm}/>
 

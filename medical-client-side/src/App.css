@@ -42,12 +42,13 @@
     max-height: 700px;
     height: 100vh;
     transform: translateX(500px);
-    transition: all 2s ease-in-out .1s;
+    transition: all 1s ease-out .1s;
  }
 
 .FormTransform{
    transform: translateX(-0);
-   transition: all 2s ease-in-out .1s;
+   /* transition: all ; */
+   transition: all 1s ease-in .1s;
 }
  .form-group {
     position: relative;

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import axios from "axios";
 
-function ProductForm({toggleFormDisplay}) {
+function ProductForm({toggleFormDisplay,toggleForm}) {
     const CategoryRef = useRef("General")
     const [productName,setProductName]=useState('')
     const [stock, setStock]=useState('')
@@ -44,10 +44,11 @@ const AddProductForm=(e)=>{
     CategoryRef.current.value="General"
 
 }
+
 return (
     <div className=' absolute top-0 right-0 w-screen  h-screen  bg-white  bg-opacity-10 flex justify-end items-center z-10' >
 
-        <form onSubmit={AddProductForm} id='AddProduct' className='productForm FormTransform relative flex flex-col gap-14  rounded-l-lg px-5' style={{ width: '450px', background: '#1D2932' }}>
+        <form onSubmit={AddProductForm} id='AddProduct' className={`productForm ${toggleForm? 'FormTransform' : '' } relative flex flex-col gap-14  rounded-l-lg px-5`} style={{ width: '450px', background: '#1D2932' }}>
             <h1 className='text-center text-3xl mt-3 border-b-2 border-gray-500 py-4 mb-4'>Add Product</h1>
             <div className="relative z-0 w-full  group px-2">
                 <input type="text" name="name" id="name" onChange={changeProductName} value={productName} className="block h-10  py-2.5 px-2 w-full text-sm text-gray-900 bg-transparent  border-2 rounded-md border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:border-2 focus:rounded-md focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
