@@ -1,3 +1,4 @@
+const { stockHistoryModel } = require("../models/StockHistoryModel");
 const { productModel } = require("../models/productModel");
 
 const categoryCountGraphData = async (req, res) => {
@@ -15,129 +16,107 @@ const categoryCountGraphData = async (req, res) => {
             cateorygraph: categories
         })
     } catch (error) {
-        return res.status(200).json({
+        return res.status(400).json({
             error: true,
             message: error?.message || error
         })
 
     }
 }
-const SalesBuyNoOfStockAccordingToDate = async (req, res) => {
+const ProductGraph = async (req, res) => {
+    const { year } = req.body;
+    const startDate = new Date(`${year}-01-01T00:00:00.000Z`);
+    const endDate = new Date(`${year}-12-31T23:59:59.999Z`);
+
     try {
-        const salesStockData = await stockHistoryModel.aggregate([
+
+        // Then, use them in your aggregate query:
+
+        const data = await productModel.aggregate([
             {
                 $match: {
-                    change: { $lt: 0 } // sales
-                }
-            },
-            {
-                $lookup: {
-                    from: 'aps_products',
-                    localField: 'productId',
-                    foreignField: '_id',
-                    as: 'product'
-                }
-            },
-            {
-                $unwind: '$product'
-            },
-            {
-                $addFields: {
-                    salesPrice: '$change'
+                    createdAt: { $gte: startDate, $lt: endDate }
                 }
             },
             {
                 $group: {
-                    _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } },
-                    totalSales: { $sum: '$salesPrice' }
-                }
-            }
-        ]);
-        const buyStockData = await stockHistoryModel.aggregate([
-            {
-                $match: {
-                    change: { $gt: 0 } // buy
-                }
-            },
-            {
-                $lookup: {
-                    from: 'aps_products',
-                    localField: 'productId',
-                    foreignField: '_id',
-                    as: 'product'
-                }
-            },
-            {
-                $unwind: '$product'
-            },
-            {
-                $addFields: {
-                    buyPrice: '$change'
-                }
-            },
-            {
-                $group: {
-                    _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } },
-                    totalBuy: { $sum: '$buyPrice' }
+                    _id: { $month: "$createdAt" },
+                    count: { $sum: 1 }
                 }
             }
         ]);
         return res.status(200).json({
             error: false,
-            salesStock: salesStockData,
-            buyStock: buyStockData
+            productgraph: data
         })
     } catch (error) {
-        return res.status(200).json({
+        return res.status(400).json({
             error: true,
             message: error?.message || error
         })
     }
 }
-const SalesGraph = async (req, res) => {
+const SaleGraph = async (req, res) => {
+    const { year } = req.body;
+    const startDate = new Date(year, 0, 1);
+    const endDate = new Date(year + 1, 0, 1);
+
     try {
-        const salesData = await stockHistoryModel.aggregate([
+        const SALE = await stockHistoryModel.aggregate([
             {
                 $match: {
-                    change: { $lt: 0 } // sales
-                }
-            },
-            {
-                $lookup: {
-                    from: 'aps_products',
-                    localField: 'productId',
-                    foreignField: '_id',
-                    as: 'product'
-                }
-            },
-            {
-                $unwind: '$product'
-            },
-            {
-                $addFields: {
-                    salesPrice: { $multiply: ['$change', '$product.price'] }
+                    timestamp: { $gte: startDate, $lt: endDate },
+                    change: { $lt: 0 }
                 }
             },
             {
                 $group: {
-                    _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } },
-                    totalSales: { $sum: '$salesPrice' }
+                    _id: { $month: "$timestamp" },
+                    sales: {
+                        $sum: "$sales"
+                    }
                 }
+            },
+            {
+                $sort: { _id: 1 }
             }
         ]);
+        const BUY = await stockHistoryModel.aggregate([
+            {
+                $match: {
+                    timestamp: { $gte: startDate, $lt: endDate },
+                    change: { $gt: 0 }
+                }
+            },
+            {
+                $group: {
+                    _id: { $month: "$timestamp" },
+                    buy: {
+                        $sum: "$sales"
+                    }
+                }
+            },
+            {
+                $sort: { _id: 1 }
+            }
+        ]);
+
         return res.status(200).json({
-            error: false,
-            sales: salesData
-        })
+            "BUY": BUY,
+            "SALE": SALE,
+            error: false
+        });
     } catch (error) {
-        return res.status(200).json({
+        return res.status(400).json({
             error: true,
             message: error?.message || error
         })
     }
 }
+
+
 module.exports = {
     categoryCountGraphData,
-    SalesBuyNoOfStockAccordingToDate,
-    SalesGraph
+    ProductGraph,
+    SaleGraph
 }

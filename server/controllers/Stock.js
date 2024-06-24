@@ -12,7 +12,7 @@ const addStock=async(req,res)=>{
         //if product found
         findProduct.stock += stock;
         const product=await findProduct.save();
-        const log=await logHistory(findProduct._id, stock, 
+        const log=await logHistory(findProduct._id,findProduct.price*stock, stock, 
         'Add Stock', findProduct.stock);
 
         return res.status(200).json({
@@ -54,7 +54,7 @@ const removeStock=async(req,res)=>{
         // and check here removing stock is less than equal existing stock
         findProduct.stock -= stock;
         const product=await findProduct.save();
-        const log=await logHistory(findProduct._id, stock*-1, 
+        const log=await logHistory(findProduct._id,findProduct.price*stock, stock*-1, 
         'Remove Stock', findProduct.stock);
 
         return res.status(200).json({

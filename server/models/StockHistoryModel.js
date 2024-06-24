@@ -6,6 +6,10 @@ const stockhistorySchema=new mongoose.Schema({
          productId: { type: 
         mongoose.Schema.Types.ObjectId, ref: 
         'aps_product' },
+        sales:{
+            type:Number,
+            default:0
+        },
         operationType:String,
          change: Number, // Positive for addition,negative for subtraction operationType: String,
          resultingQuantity: Number

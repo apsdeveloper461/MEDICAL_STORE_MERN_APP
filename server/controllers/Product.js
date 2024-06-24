@@ -23,7 +23,7 @@ const newproduct=async(req,res)=>{
     })
 
     const product=await newPro.save()
-    await logHistory(product._id,product.stock,'At Starting Stock',product.stock)
+    await logHistory(product._id,product.stock*product.price,product.stock,'At Starting Stock',product.stock)
     return res.status(200).json({
         error:false,
         Product:product,

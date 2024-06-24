@@ -1,9 +1,10 @@
 const { stockHistoryModel } = require("../models/StockHistoryModel");
 
-const logHistory = async (productId, change, operationType, resultingQuantity) => {
+const logHistory = async (productId,sales, change, operationType, resultingQuantity) => {
      const historyDoc = new stockHistoryModel({
      productId,
      change,
+     sales,
      operationType,
      resultingQuantity
      });
