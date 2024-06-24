@@ -1,19 +1,30 @@
 import React, { useEffect, useState } from 'react'
-import moment from 'moment'
 import { FaHistory } from "react-icons/fa";
 
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { FaRegEdit } from "react-icons/fa";
+import { MdAddCircleOutline } from "react-icons/md";
+import { AiOutlineMinusCircle } from "react-icons/ai";
 import Loading from './Loading';
 import UpdateProductForm from './UpdateProductForm';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import StockChangeForm from './StockChangeForm';
+
+
 function ProductsDisplay({ products,selectedCategory,toggleFormDisplay,isloading }) {
   const naviate=useNavigate()
 const [productData,setproductData]=useState([])
 const [displayUpdateProductPage,setDisplayUpdateProductPage]=useState(false)
 const [displayUpdateProductForm,setDisplayUpdateProductForm]=useState(false)
 const [updateFormData,setUpdateFormData]=useState(null)
+const [isStockChangeFormDisplay,setIsStockChangeFormDisplay]=useState(false)
+const [StockChangeFormData,setStockChangeFormData]=useState({
+  productId:'',
+  productName:'',
+  quantity:0,
+  stockStatus:''
+})
   useEffect(() => {
 console.log(selectedCategory);
 let productsAccordingToCategory = [];
@@ -68,6 +79,21 @@ const NaviateToHistoryLog=(productId)=>{
   }
 
 }
+const ChangeStockHandler=(productId,stockStatus)=>{
+   console.log(productId,stockStatus);
+   const productName=productData.filter(f=>f._id === productId)
+   console.log(productName);
+   setStockChangeFormData({
+    productId:productId,
+    productName:productName[0].name,
+    quantity:productName[0].stock,
+  stockStatus:stockStatus
+   })
+   togleStockChangeFormDisplay()
+}
+const togleStockChangeFormDisplay=()=>{
+  setIsStockChangeFormDisplay((prev)=>!prev)
+}
     return (
         <>
         <div className=' w-full my-3 rounded-md overflow-x-auto   shadow-sm shadow-gray-700' style={{
@@ -82,6 +108,7 @@ const NaviateToHistoryLog=(productId)=>{
                         <th className='w-16 text-left'>Sr.no</th>
                         <th className='w-96 text-left '>Product Name</th>
                         <th className='w-36 text-left '>Quantity/Stock</th>
+                        <th className='w-36 text-left '>Change Stock</th>
                         <th className='w-36 text-left '>Category</th>
                         <th className='w-32 text-left '>Unit Price</th>
                         <th className='w-64 text-left '>CreatedAt</th>
@@ -106,6 +133,7 @@ const NaviateToHistoryLog=(productId)=>{
                                 <td className='w-16 text-left'> {index + 1}</td>
                                 <td className='w-96 text-left '>{product.name}</td>
                                 <td className='w-36 text-left '>{product.stock}</td>
+                                <td className='w-36 text-left flex gap-1 items-center pl-3 text-white '><MdAddCircleOutline onClick={()=>ChangeStockHandler(product._id,'add')} className='text-2xl hover:text-xl hover:text-blue-500 w-6 cursor-pointer'/><AiOutlineMinusCircle onClick={()=>ChangeStockHandler(product._id,'remove')} className='text-2xl hover:text-xl hover:text-red-600 w-6 cursor-pointer'/></td>
                                 <td className='w-36 text-left '>{product.category}</td>
                                 <td className='w-32 text-left '>{product.price}</td>
                                 <td className=' w-64 text-left '>{product.created}</td>
@@ -124,6 +152,10 @@ const NaviateToHistoryLog=(productId)=>{
                 </tbody>
             </table>
         </div>
+        {
+          isStockChangeFormDisplay &&
+              <StockChangeForm productId={StockChangeFormData.productId} quantity={StockChangeFormData.quantity} productName={StockChangeFormData.productName} toggleForm={togleStockChangeFormDisplay} stockStatus={StockChangeFormData.stockStatus}/>
+        }
         {displayUpdateProductPage && 
             <UpdateProductForm toggleFormDisplay={toggleUpdateProductForm} toggleForm={displayUpdateProductForm} FormData={updateFormData}/>
         }

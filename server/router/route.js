@@ -1,7 +1,7 @@
 const express=require('express')
 const {newproduct,updateProduct} = require('../controllers/Product')
 const {addStock,removeStock} = require('../controllers/Stock')
-const { getAllProduct } = require('../controllers/SerachProduct')
+const { getAllProduct, customProduct } = require('../controllers/SerachProduct')
 const { getAlllogHistory, getCustomProductHistory } = require('../controllers/logHistorySeacrh')
 const { categoryCountGraphData, SalesBuyNoOfStockAccordingToDate, SalesGraph } = require('../controllers/graph')
 const router=express.Router()
@@ -12,6 +12,8 @@ router.post('/new_product',newproduct)
 router.post('/update_product',updateProduct)
 // get All product List
 router.get('/products',getAllProduct)
+// get custom product detail
+router.post('/customproduct',customProduct)
 // adding stock in existing product
 router.post('/add_stock',addStock)
 // removin stock in existing product
