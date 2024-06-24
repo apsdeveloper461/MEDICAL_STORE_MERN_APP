@@ -138,5 +138,6 @@ const SalesGraph = async (req, res) => {
 }
 module.exports = {
     categoryCountGraphData,
-    SalesBuyNoOfStockAccordingToDate
+    SalesBuyNoOfStockAccordingToDate,
+    SalesGraph
 }

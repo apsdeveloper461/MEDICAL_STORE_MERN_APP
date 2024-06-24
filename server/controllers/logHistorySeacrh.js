@@ -13,7 +13,7 @@ const getAlllogHistory = async (req, res) => {
                 }
             }
         }).populate('productId')
-        console.log(getAllHistory);
+        // console.log(getAllHistory);
         return res.status(200).json({
             log: getAllHistory,
             error: false

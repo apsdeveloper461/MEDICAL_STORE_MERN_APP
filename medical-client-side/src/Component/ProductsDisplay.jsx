@@ -28,9 +28,7 @@ if (selectedCategory === "") {
 // console.log("products ", productData);
 
   }, [selectedCategory,products]);
-    const LogButtonClick = (e) => {
-        console.log(e.target.id);
-    }
+   
 
     const toggleUpdateProductForm = () => {
         if (displayUpdateProductPage) {
@@ -112,7 +110,7 @@ const NaviateToHistoryLog=(productId)=>{
                                 <td className='w-32 text-left '>{product.price}</td>
                                 <td className=' w-64 text-left '>{product.created}</td>
                                 <td className='w-64 text-left '>{product.updated}</td>
-                                <td className='w-24 text-left '><button id={product._id} onClick={LogButtonClick} style={{ background: '#078D8C' }} className=' outline-none  text-md py-0.5 px-2 rounded-md font-semibold text-white hover:-translate-y-1 hover:transition-transform hover:text-gray-400'>view Log</button></td>
+                                <td className='w-24 text-left '><button onClick={()=>NaviateToHistoryLog(product._id)} style={{ background: '#078D8C' }} className=' outline-none  text-md py-0.5 px-2 rounded-md font-semibold text-white hover:-translate-y-1 hover:transition-transform hover:text-gray-400'>view Log</button></td>
                             </tr>
                         )
                     })}
