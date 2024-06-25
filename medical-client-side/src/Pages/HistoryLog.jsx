@@ -37,7 +37,7 @@ function HistoryLog() {
       <Navbar greeting={'Welcome to Products Log Page'}/>
           <HistroyDisplay logData={logDataFromBackend || []}/>
       <div className="row relative flex flex-row items-center justify-center rounded-md ml-2 h-10    mx-3 px-3" style={{ background: '#2B3C46' }}>
-        <MdCopyright className='mr-1'/>Copywrite By <a className='mx-1 text-teal-600 font-bold cursor-pointer' href='' target='_blank'> Aps Developer</a><strong>|</strong> <a className='mx-1 text-teal-600 font-bold cursor-pointer' href="https://www.linkedin.com/in/mehboob-alam-3999822b3/" target='_blank'>Mehboob Alam</a>
+        <MdCopyright className='mr-1'/>2024 Copywrite By <a className='mx-1 text-teal-600 font-bold cursor-pointer' href='' target='_blank'> Aps Developer</a><strong>|</strong> <a className='mx-1 text-teal-600 font-bold cursor-pointer' href="https://www.linkedin.com/in/mehboob-alam-3999822b3/" target='_blank'>Mehboob Alam</a>
           </div>
     </>
   )

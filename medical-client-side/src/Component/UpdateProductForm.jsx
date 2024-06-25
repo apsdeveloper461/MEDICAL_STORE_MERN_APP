@@ -86,10 +86,9 @@ const UpdateProductForm=(e)=>{
                     <input type="number" name="price" id="price" onChange={changePrice} value={price}  className="ProductFormInput block h-10 py-2.5 px-2 w-full text-sm text-gray-900 bg-transparent border-2 rounded-md border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 focus:border-2 focus:rounded-md peer" placeholder="" min={1} max={100000} required />
                     <label htmlFor="price" className="mx-5 px-2 mb-2 peer-focus:font-medium absolute  text-md  text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-2 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-5 " style={{ background: '#1D2932' }}>Unit Price</label>
                 </div>
-                <div className="grid md:grid-cols-2 md:gap-6">
-                    <div onClick={()=> {toast.success("Cancel Successfully")
-                         toggleFormDisplay()}} className="cursor-pointer text-white hover:bg-red-900  bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-400 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Cancel</div>
-                    <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update Product</button>
+                <div className="flex flex-col items-center ">
+                    <div onClick={()=> {toast.success("Cancel Successfully");toggleFormDisplay()}} className="w-full cursor-pointer text-white hover:bg-red-900  bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-400 font-medium rounded-lg text-sm  px-5 py-2.5 text-center">Cancel</div>
+                    <button type="submit" className="w-full mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm \ px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update Product</button>
     
                 </div>
     

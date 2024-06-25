@@ -3,7 +3,7 @@ const {newproduct, updateProduct}=require('../controllers/Product')
 const {getAllProduct, customProduct}=require('../controllers/SerachProduct')
 const { addStock, removeStock }=require('../controllers/Stock')
 const { getAlllogHistory, getCustomProductHistory }=require('../controllers/logHistorySeacrh')
-const { categoryCountGraphData, ProductGraph, SaleGraph }=require('../controllers/graph')
+const { categoryCountGraphData, ProductGraph, SaleGraph, ProductSalesDetail }=require('../controllers/graph')
 
 const router=express.Router()
 
@@ -29,12 +29,12 @@ router.post('/customlog',getCustomProductHistory)
                 // Here start router for graph data
 // category Data for pie gragh
 router.get('/categorygraph',categoryCountGraphData)
-// // get stock sale Quantity and buy stock quanttiy graph month and year pass by request.body
-// router.post('/stockgraph',SalesBuyNoOfStockAccordingToDate)
 //sales graph according month and year
 router.post('/totalsale',SaleGraph)
 // get product graph according to year
 router.post('/productgraph',ProductGraph)
+
+router.get('/dashboard',ProductSalesDetail)
 
 
 

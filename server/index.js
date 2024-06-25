@@ -32,13 +32,49 @@ app.get('/',(req,res)=>{
 //routes
 app.use('/store',router)
 
- //listen
-// const log=async()=>{
+//  //listen
+const log=async()=>{
    
-//    console.log("SalesData",salesStockData);
+    // const data = await stockHistoryModel.aggregate([
+    //     {
+    //       $lookup: {
+    //         from: "aps_products",
+    //         localField: "productId",
+    //         foreignField: "_id",
+    //         as: "product_data"
+    //       }
+    //     },
+    //     {
+    //       $unwind: "$product_data"
+    //     },
+    //     {
+    //       $match: {
+    //         $expr: {
+    //           $eq: [{ $dayOfYear: "$timestamp" }, { $dayOfYear: new Date() }]
+    //         }
+    //       }
+    //     },
+    //     {
+    //       $project: {
+    //         _id: 0,
+    //         timestamp: {
+    //           $dateToString: {
+    //             date: "$timestamp",
+    //             format: "%H:%M:%S"
+    //           }
+    //         },
+    //         product_data: 1
+    //       }
+    //     }
+    //   ])
+      
+      
+
+    // console.log(data);
   
-// }
-// log()
+}
+
+log()
 
  DBconnection().then(()=>{
     app.listen(PORT,()=>{

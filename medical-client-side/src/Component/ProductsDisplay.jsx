@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import StockChangeForm from './StockChangeForm';
 
 
-function ProductsDisplay({ products,selectedCategory,toggleFormDisplay,isloading }) {
+function ProductsDisplay({ products,selectedCategory,toggleFormDisplay,isloading,setRefFetchData }) {
   const naviate=useNavigate()
 const [productData,setproductData]=useState([])
 const [displayUpdateProductPage,setDisplayUpdateProductPage]=useState(false)
@@ -47,6 +47,8 @@ if (selectedCategory === "") {
           setTimeout(() => {
             setDisplayUpdateProductPage(false)
           }, 1000);
+          
+               setRefFetchData((prev)=>!prev)
         } else {
           setDisplayUpdateProductPage(true)
           setTimeout(() => {
@@ -90,9 +92,11 @@ const ChangeStockHandler=(productId,stockStatus)=>{
   stockStatus:stockStatus
    })
    togleStockChangeFormDisplay()
-}
-const togleStockChangeFormDisplay=()=>{
-  setIsStockChangeFormDisplay((prev)=>!prev)
+   
+  }
+  const togleStockChangeFormDisplay=()=>{
+    setIsStockChangeFormDisplay((prev)=>!prev)
+    setRefFetchData((prev)=>!prev)
 }
     return (
         <>
@@ -133,7 +137,7 @@ const togleStockChangeFormDisplay=()=>{
                                 <td className='w-16 text-left'> {index + 1}</td>
                                 <td className='w-96 text-left '>{product.name}</td>
                                 <td className='w-36 text-left '>{product.stock}</td>
-                                <td className='w-36 text-left flex gap-1 items-center pl-3 text-white '><MdAddCircleOutline onClick={()=>ChangeStockHandler(product._id,'add')} className='text-2xl hover:text-xl hover:text-blue-500 w-6 cursor-pointer'/><AiOutlineMinusCircle onClick={()=>ChangeStockHandler(product._id,'remove')} className='text-2xl hover:text-xl hover:text-red-600 w-6 cursor-pointer'/></td>
+                                <td className='w-36 text-left flex gap-1 items-center pl-3 text-slate-100 '><MdAddCircleOutline onClick={()=>ChangeStockHandler(product._id,'add')} className='text-2xl hover:text-xl text-blue-500 w-6 cursor-pointer'/><AiOutlineMinusCircle onClick={()=>ChangeStockHandler(product._id,'remove')} className='text-2xl hover:text-xl text-red-600 w-6 cursor-pointer'/></td>
                                 <td className='w-36 text-left '>{product.category}</td>
                                 <td className='w-32 text-left '>{product.price}</td>
                                 <td className=' w-64 text-left '>{product.created}</td>

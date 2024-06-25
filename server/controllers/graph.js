@@ -57,11 +57,10 @@ const ProductGraph = async (req, res) => {
     }
 }
 const SaleGraph = async (req, res) => {
-    const { year } = req.body;
-    const startDate = new Date(year, 0, 1);
-    const endDate = new Date(year + 1, 0, 1);
-
     try {
+        const { year, month } = req.body;
+        const startDate = new Date(year, month - 1, 1)
+        const endDate = new Date(year, month, 1)
         const SALE = await stockHistoryModel.aggregate([
             {
                 $match: {
@@ -71,7 +70,7 @@ const SaleGraph = async (req, res) => {
             },
             {
                 $group: {
-                    _id: { $month: "$timestamp" },
+                    _id: { $dayOfMonth: "$timestamp" }, // group by day of month
                     sales: {
                         $sum: "$sales"
                     }
@@ -81,6 +80,7 @@ const SaleGraph = async (req, res) => {
                 $sort: { _id: 1 }
             }
         ]);
+        console.log(SALE);
         const BUY = await stockHistoryModel.aggregate([
             {
                 $match: {
@@ -90,7 +90,7 @@ const SaleGraph = async (req, res) => {
             },
             {
                 $group: {
-                    _id: { $month: "$timestamp" },
+                    _id: { $dayOfMonth: "$timestamp" }, // group by day of month
                     buy: {
                         $sum: "$sales"
                     }
@@ -115,8 +115,110 @@ const SaleGraph = async (req, res) => {
 }
 
 
+const ProductSalesDetail = async (req, res) => {
+    console.log("Dashboard");
+    try {
+        const products = await productModel.find();
+        const productCount = products.length
+
+
+        const today = new Date();
+        const today_string = today.toISOString().slice(0, 10); // YYYY-MM-DD
+        const currentMonth = today.getMonth(); // get the current month (0-11)
+        const currentYear = today.getFullYear(); // get the current year
+
+        const todaySales = await stockHistoryModel.aggregate([
+            {
+                $match: {
+                    $expr: {
+                        $eq: [{ $dateToString: { date: "$timestamp", format: "%Y-%m-%d" } }, today_string]
+                    },
+                    change: { $lt: 0 }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalSales: { $sum: "$sales" }
+                }
+            }
+        ]);
+        // console.log(todaySales)  
+        const MonthlySale = await stockHistoryModel.aggregate([
+            {
+                $match: {
+                    $expr: {
+                        $eq: [{ $month: "$timestamp" }, currentMonth],
+                        $eq: [{ $year: "$timestamp" }, currentYear]
+                    },
+                    change: { $lt: 0 }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalSales: { $sum: "$sales" }
+                }
+            }
+        ]);
+   const data = await stockHistoryModel.aggregate([
+        {
+          $lookup: {
+            from: "aps_products",
+            localField: "productId",
+            foreignField: "_id",
+            as: "product_data"
+          }
+        },
+        {
+          $unwind: "$product_data"
+        },
+        {
+          $match: {
+            $expr: {
+              $eq: [{ $dayOfYear: "$timestamp" }, { $dayOfYear: new Date() }]
+            }
+          }
+        },
+        {
+          $project: {
+            _id: "$_id",
+            change:'$change',
+            sales:"$sales",
+            timestamp: {
+              $dateToString: {
+                date: "$timestamp",
+                format: "%Y-%m-%d %H:%M:%S"
+              }
+            },
+            product_data: 1
+          }
+        }
+      ])
+      console.log(data);
+        // console.log(Sales);
+        return res.status(200).json({
+            error: false,
+            productCount: productCount,
+            monthlySale: MonthlySale,
+            todaySale: todaySales,
+            todaySalesDetail:data
+
+        })
+    } catch (error) {
+
+        return res.status(400).json({
+            error: true,
+            message: error?.message || error
+        })
+    }
+
+}
+
+
 module.exports = {
     categoryCountGraphData,
     ProductGraph,
-    SaleGraph
+    SaleGraph,
+    ProductSalesDetail
 }

@@ -88,7 +88,8 @@
     /* background: red; */
 }
 ::-webkit-scrollbar{
-    width: 4px;
+    width: 10px;
+    
     height: 12px;
     background:#10161b91;
     

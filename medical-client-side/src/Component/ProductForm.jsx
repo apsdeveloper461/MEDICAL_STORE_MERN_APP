@@ -57,7 +57,7 @@ const AddProductForm=(e)=>{
 return (
     <div className=' absolute top-0 right-0 w-screen  h-screen  bg-white  bg-opacity-10 flex justify-end items-center z-10' >
 
-        <form onSubmit={AddProductForm} id='AddProduct' className={`productForm ${toggleForm? 'FormTransform' : '' } relative flex flex-col gap-14  rounded-l-lg px-5`} style={{ width: '450px', background: '#1D2932' }}>
+        <form onSubmit={AddProductForm} id='AddProduct' className={`productForm ${toggleForm? 'FormTransform' : '' } relative flex flex-col gap-12  rounded-l-lg px-5`} style={{ width: '450px', background: '#1D2932' }}>
             <MdClose onClick={toggleFormDisplay} className='absolute left-0 m-3 text-2xl cursor-pointer active:text-red-700 hover:text-xl w-fit'/>
             <h1 className='text-center text-3xl mt-3 border-b-2 border-gray-500 py-4 mb-4'>Add Product</h1>
             <div className="relative z-0 w-full  group px-2">
@@ -89,9 +89,9 @@ return (
                 <input type="number" name="price" id="price" onChange={changePrice} value={price}  className="ProductFormInput block h-10 py-2.5 px-2 w-full text-sm text-gray-900 bg-transparent border-2 rounded-md border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 focus:border-2 focus:rounded-md peer" placeholder="" min={1} max={100000} required />
                 <label htmlFor="price" className="mx-5 px-2 mb-2 peer-focus:font-medium absolute  text-md  text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-2 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-5 " style={{ background: '#1D2932' }}>Unit Price</label>
             </div>
-            <div className="grid md:grid-cols-2 md:gap-6">
-                <div onClick={()=>{ toast.success("Cancel Successfully");toggleFormDisplay()}} className="cursor-pointer text-white hover:bg-red-900  bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-400 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Cancel</div>
-                <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add Product</button>
+            <div className="flex flex-col items-center gap-4 ">
+                <div onClick={()=>{ toast.success("Cancel Successfully");toggleFormDisplay()}} className="cursor-pointer text-white hover:bg-red-900  bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-400 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center">Cancel</div>
+                <button type="submit" className="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add Product</button>
 
             </div>
 

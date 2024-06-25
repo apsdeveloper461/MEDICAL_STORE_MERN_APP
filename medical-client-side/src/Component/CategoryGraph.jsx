@@ -33,7 +33,7 @@ const PolarAreaChart = () => {
           };
           setData(chartData);
         } else {
-          console.error('Unexpected data format:', apiData);
+          console.error('Unexpected data format:', data);
           setError('Unexpected data format');
         }
         setLoading(false);
@@ -56,9 +56,9 @@ const PolarAreaChart = () => {
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    <div className=" w-80 h-80 rounded-2xl p-2" style={{background: '#1D2932'}} >
+    <div className=" relative rounded-2xl p-2 min-w-88 min-h-88" style={{background: '#1D2932'}} >
       {data ? (
-        <PolarArea className=' drop-shadow-md' data={data}/>
+        <PolarArea className=' drop-shadow-md'  data={data}/>
       ) : (
         <p className="text-gray-500">No data available</p>
       )}

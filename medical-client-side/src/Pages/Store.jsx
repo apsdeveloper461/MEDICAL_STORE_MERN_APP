@@ -11,6 +11,7 @@ import ProductForm from '../Component/ProductForm';
 
 function Store() {
   const CategoriesOptionsRef = useRef("General")
+  const [refFetchData,setRefFetchData]=useState(false)
   const [isShowAddProductPage, setIsShowAddProductPage] = useState(false)
   const [isShowAddProductForm, setIsShowAddProductForm] = useState(false)
   const [productFromBackend, setproductFromBackend] = useState([])
@@ -56,8 +57,11 @@ function Store() {
     })
   }
   useEffect(() => {
+    
+   console.log("Get data from backend ");
       getDataFromBackend()
-  }, []);
+
+  }, [refFetchData]);
   // RefreshDataHandler
   const RefreshDataHandler=()=>{
     getDataFromBackend()
@@ -70,7 +74,7 @@ function Store() {
         setIsShowAddProductPage(false)
 
       }, 1000);
-
+      setRefFetchData((prev)=>!prev)
 
     } else {
       setIsShowAddProductPage(true)
@@ -78,7 +82,6 @@ function Store() {
         setIsShowAddProductForm((prev) => !prev)
 
       }, 0);
-
     }
     // callback()
     // console.log(document.querySelector('#AddProduct'));
@@ -123,7 +126,7 @@ function Store() {
         <TbRefreshDot className='text-xl mr-3 hover:text-emerald-700 w-6 cursor-pointer hover:text-lg' onClick={RefreshDataHandler}/>
 
       </div>
-      <ProductsDisplay products={searchProduct} selectedCategory={category} toggleFormDisplay={toggleAddProductForm} isloading={isLoading} />
+      <ProductsDisplay products={searchProduct} setRefFetchData={setRefFetchData} selectedCategory={category} toggleFormDisplay={toggleAddProductForm} isloading={isLoading} />
 
       {isShowAddProductPage &&
         <ProductForm toggleFormDisplay={toggleAddProductForm} toggleForm={isShowAddProductForm} />
