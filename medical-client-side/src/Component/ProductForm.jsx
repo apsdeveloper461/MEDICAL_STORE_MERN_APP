@@ -36,7 +36,7 @@ const AddProductForm=(e)=>{
             price:price
     }
     axios.post( `${import.meta.env.VITE_BACKEND_URL}/new_product`,payload).then(res=>{
-        console.log(res);
+        // console.log(res);
         toast.success('Add Product Successfully')
 
     }).catch(err=>{

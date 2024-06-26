@@ -26,7 +26,7 @@ const changeStock=(e)=>{
     // console.log(e.target.value);
 }
 useEffect(() => {
-    console.log("FormData",FormData);
+    // console.log("FormData",FormData);
     setProductName(FormData.name)
     setPrice(FormData.price)
     CategoryRef.current.value=FormData.category
@@ -42,7 +42,7 @@ const UpdateProductForm=(e)=>{
             price:price
     }
     axios.post( `${import.meta.env.VITE_BACKEND_URL}/update_product`,payload).then(res=>{
-        console.log(res);
+        // console.log(res);
         toast.success('Update Product Successfully')
         toggleFormDisplay()
 

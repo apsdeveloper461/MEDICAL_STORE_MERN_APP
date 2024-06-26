@@ -80,7 +80,7 @@ const SaleGraph = async (req, res) => {
                 $sort: { _id: 1 }
             }
         ]);
-        console.log(SALE);
+        // console.log(SALE);
         const BUY = await stockHistoryModel.aggregate([
             {
                 $match: {
@@ -116,7 +116,7 @@ const SaleGraph = async (req, res) => {
 
 
 const ProductSalesDetail = async (req, res) => {
-    console.log("Dashboard");
+    // console.log("Dashboard");
     try {
         const products = await productModel.find();
         const productCount = products.length
@@ -195,7 +195,7 @@ const ProductSalesDetail = async (req, res) => {
           }
         }
       ])
-      console.log(data);
+    //   console.log(data);
         // console.log(Sales);
         return res.status(200).json({
             error: false,

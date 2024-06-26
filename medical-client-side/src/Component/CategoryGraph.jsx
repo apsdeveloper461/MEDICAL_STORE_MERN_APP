@@ -15,7 +15,7 @@ const PolarAreaChart = () => {
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/categorygraph`)
       .then(response => {
         const apiData = response.data.cateorygraph;
-        console.log('Fetched data:', apiData);
+        // console.log('Fetched data:', apiData);
         if (Array.isArray(apiData) && apiData.length > 0) {
           const chartData = {
             labels: apiData.map(item => item._id),

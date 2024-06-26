@@ -12,7 +12,7 @@ function HistoryLog() {
   const location=useLocation()
   const  LOGDATA  = location.state || null
   const [searchData,setSearchData]=useState('')
-  console.log("state",location.state);
+  // console.log("state",location.state);
   const [logDataFromBackend,setlogDataFromBackend]=useState([])
   const changeSeacrhData=(e)=>{
     setSearchData(e.target.value)
@@ -21,13 +21,13 @@ function HistoryLog() {
     // lo
     if(LOGDATA === null){
        axios.get(`${import.meta.env.VITE_BACKEND_URL}/log`).then(res=>{
-        console.log(res?.data?.log);
+        // console.log(res?.data?.log);
         setlogDataFromBackend(res?.data?.log)
       }).catch(err=>console.log(err))
-      console.log("Null LOGDATA");
+      // console.log("Null LOGDATA");
       // console.log(logDataFromBackend);
     }else{
-      console.log("LODATA IS NOT NULL");
+      // console.log("LODATA IS NOT NULL");
       setlogDataFromBackend(LOGDATA)
     }
     

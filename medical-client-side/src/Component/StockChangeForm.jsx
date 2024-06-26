@@ -13,7 +13,7 @@ function StockChangeForm({productId=null,quantity=0,productName='',toggleForm,st
     }, []);
     const changeStockChange=(e)=>{
         setStockChange(parseInt(e.target.value))
-        console.log(e.target.value,stockChange);
+        // console.log(e.target.value,stockChange);
     }
     const changeStockFormSubmit=(e)=>{
         e.preventDefault()  
@@ -23,7 +23,7 @@ function StockChangeForm({productId=null,quantity=0,productName='',toggleForm,st
         }
         if(stockStatus==="add"){
             axios.post(`${import.meta.env.VITE_BACKEND_URL}/add_stock`,payload).then(res=>{
-                console.log(res.data);
+                // console.log(res.data);
                 toast.success(res.data.message)
                 toggleForm()
             }).catch(err=>{
@@ -32,7 +32,7 @@ function StockChangeForm({productId=null,quantity=0,productName='',toggleForm,st
             })
         }else if(stockStatus === 'remove'){
             axios.post(`${import.meta.env.VITE_BACKEND_URL}/remove_stock`,payload).then(res=>{
-                console.log(res.data);
+                // console.log(res.data);
                 toast.success(res.data.message)
                 toggleForm()
             }).catch(err=>{

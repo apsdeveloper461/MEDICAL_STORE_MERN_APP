@@ -34,21 +34,21 @@ function SalesBuyGraph() {
                 arrayYear.push(parseInt(startYear++))
             }
             setyearsArrayFrom2024toCurrentYear(arrayYear)
-            console.log("Option Years", arrayYear);
+            // console.log("Option Years", arrayYear);
         }
     }, []);
     useEffect(() => {
         // console.log("currentyear",currentyear);
         // let chartInstance; // Declare a variable to store the chart instance
         const fetchData = async () => {
-            console.log("year",  (year),"Month",month);
+            // console.log("year",  (year),"Month",month);
             const DATABUY = Array(monthDays[month-1]).fill(0);
             const DATASALE = Array(monthDays[month-1]).fill(0);
             axios.post(`${import.meta.env.VITE_BACKEND_URL}/totalsale`, { year: parseInt(year),month:parseInt(month) }).then(res => {
                 // console.log("Productgraph", res.data);
                 const dataBUY = res.data.BUY
                 const dataSALE = res.data.SALE
-                console.log(dataBUY, dataSALE);
+                // console.log(dataBUY, dataSALE);
 
                 if (Array.isArray(dataBUY) && Array.isArray(dataSALE)) {
                     dataBUY.forEach(item => {
@@ -57,7 +57,7 @@ function SalesBuyGraph() {
                     dataSALE.forEach(item => {
                         DATASALE[item._id - 1] = item.sales;
                     });
-                    console.log(DATABUY, DATASALE);
+                    // console.log(DATABUY, DATASALE);
                     const newArray = [];
                     for (let i = 1; i <= monthDays[month-1]; i++) {
                       newArray.push(i);
@@ -98,12 +98,12 @@ function SalesBuyGraph() {
         fetchData();
     }, [year, month]);
     const changeyear = (e) => {
-        console.log("e.target.value",e.target.value);
+        // console.log("e.target.value",e.target.value);
         // console.log("DataYearRef.current.value", DataYearRef.current.value);
         setYear(e.target.value)
     }
     const changeMonth=(e)=>{
-        console.log("e.target.value",e.target.value);
+        // console.log("e.target.value",e.target.value);
         setMonth(e.target.value)
     }
 

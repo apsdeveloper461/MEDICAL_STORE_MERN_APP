@@ -36,9 +36,9 @@ const getAllProduct=async(req,res)=>{
 const customProduct=async(req,res)=>{
     try {
         const {productId}=req.body
-        console.log(productId);
+        // console.log(productId);
         const getProduct=await productModel.findOne({_id:productId})
-        console.log(getProduct);
+        // console.log(getProduct);
         return res.status(200).json({
             product:getProduct,
             error:false

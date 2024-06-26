@@ -22,7 +22,7 @@ axios.get(`${import.meta.env.VITE_BACKEND_URL}/dashboard`).then(res=>{
   setTodaySale(Number(res?.data?.todaySale[0]?.totalSales || 0).toFixed(2))
   setThisMonthSale(Number(res?.data?.monthlySale[0]?.totalSales || 0).toFixed(2))
   setTodaysalesDetail(res?.data?.todaySalesDetail)
-  console.log(res.data);
+  // console.log(res.data);
 }).catch(err=>{
   console.log(err);
 })
@@ -32,15 +32,15 @@ axios.get(`${import.meta.env.VITE_BACKEND_URL}/dashboard`).then(res=>{
       <Navbar greeting={'Welcome to Dashboard'}/>
       <div className='border-b-2 border-gray-700 mb-5'></div>
       {/* <PolarGraph/> */}
-      <div className="row flex items-center justify-between relative w-full">
-      <div className="items noOfProduct  h-32 shadow-sm shadow-slate-500 cursor-pointer  rounded-2xl p-3" style={{width:'32%',background:'#2B3C46'}}>
+      <div className="row flex items-center justify-evenly relative w-full">
+      <div className="items noOfProduct  h-32 shadow-sm shadow-slate-500 cursor-pointer  rounded-2xl p-3" style={{width:'30%',background:'#2B3C46'}}>
         <h1 className='text-2xl font-semibold'>Products</h1>
         <div className='mt-2 flex items-center justify-center  w-full'>
         <MdStoreMallDirectory className=' text-cyan-400 text-3xl mt-2 mr-2'/>
         <div className='text-4xl font-bold text-slate-50 '>{totalProduct} <span className=' text-sm text-gray-400'>items</span> </div>
         </div>
       </div>
-      <div className="items noOfProduct  h-32 shadow-sm shadow-slate-500 cursor-pointer rounded-2xl p-3" style={{width:'32%',background:'#2B3C46'}}>
+      <div className="items noOfProduct  h-32 shadow-sm shadow-slate-500 cursor-pointer rounded-2xl p-3" style={{width:'30%',background:'#2B3C46'}}>
       {/* < className='text-5xl'/> */}
       <h1 className='text-2xl font-semibold'>Today Sales</h1>
         <div className='mt-4 flex justify-center  w-full'>
@@ -48,7 +48,7 @@ axios.get(`${import.meta.env.VITE_BACKEND_URL}/dashboard`).then(res=>{
         <div className='text-2xl font-bold text-slate-50 '>{todaySale} <span className=' text-sm text-gray-400'>today</span> </div>
         </div>
       </div>
-      <div className="items noOfProduct   h-32 shadow-sm shadow-slate-500 cursor-pointer rounded-2xl p-3" style={{width:'32%',background:'#2B3C46'}}>
+      <div className="items noOfProduct   h-32 shadow-sm shadow-slate-500 cursor-pointer rounded-2xl p-3" style={{width:'30%',background:'#2B3C46'}}>
       {/* < className='text-5xl'/> */}
       <h1 className='text-2xl font-semibold'>Sales</h1>
         <div className='mt-4 flex  justify-center  w-full'>

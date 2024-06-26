@@ -8,7 +8,7 @@ const newproduct=async(req,res)=>{
        const findProductWithName=await productModel.findOne({name})
        
        if(findProductWithName){
-           console.log(findProductWithName,Boolean(findProductWithName))
+        //    console.log(findProductWithName,Boolean(findProductWithName))
            throw "Already Product Available"
         }
         
@@ -43,11 +43,11 @@ const updateProduct=async(req,res)=>{
     try {
      const {product_id,name,category,price}=req.body;
      //adding new product
-     console.log("hello");
+    //  console.log("hello");
      const findProduct= await  productModel.updateOne({_id:product_id},{
          name,category,price
      })
-     console.log(findProduct);
+    //  console.log(findProduct);
      return res.status(200).json({
          error:false,
          message:"Update Product Successfully"

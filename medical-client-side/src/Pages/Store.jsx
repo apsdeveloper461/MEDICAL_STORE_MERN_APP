@@ -22,11 +22,11 @@ function Store() {
   const changeSeacrhData = async (e) => {
 
     setIsLoading(true)
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setSearchData(e.target.value)
 
     setsearchProduct(searchFundtionOfProduct(searchData))
-    console.log("searchData", searchFundtionOfProduct(searchData));
+    // console.log("searchData", searchFundtionOfProduct(searchData));
 
     setTimeout(() => {
       setIsLoading(false)
@@ -42,7 +42,7 @@ function Store() {
   };
 
   const CategoriesOptionChange = () => {
-    console.log(CategoriesOptionsRef.current.value);
+    // console.log(CategoriesOptionsRef.current.value);
     setCategory(CategoriesOptionsRef.current.value)
 
 
@@ -51,14 +51,14 @@ function Store() {
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/products`).then((res) => {
       setproductFromBackend(res.data.product)
       setsearchProduct(res.data.product)
-      console.log(res.data.product);
+      // console.log(res.data.product);
     }).catch((err) => {
       console.log(err);
     })
   }
   useEffect(() => {
     
-   console.log("Get data from backend ");
+  //  console.log("Get data from backend ");
       getDataFromBackend()
 
   }, [refFetchData]);

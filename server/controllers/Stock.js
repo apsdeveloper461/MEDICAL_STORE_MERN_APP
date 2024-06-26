@@ -41,14 +41,14 @@ const removeStock=async(req,res)=>{
 
         //add Quantity/stock in a store
         const findProduct=await productModel.findOne({_id:product_id})
-        console.log(findProduct,"find Product");
+        // console.log(findProduct,"find Product");
         if(!findProduct)  throw "Product not Found"
 
         //if product found
 
         // if stock is greater than existing stock
         if(stock > findProduct.stock){
-            console.log("gt ");
+            // console.log("gt ");
             throw "Unsuffficent Stock"
         }
         // and check here removing stock is less than equal existing stock

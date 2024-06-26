@@ -26,7 +26,7 @@ const [StockChangeFormData,setStockChangeFormData]=useState({
   stockStatus:''
 })
   useEffect(() => {
-console.log(selectedCategory);
+// console.log(selectedCategory);
 let productsAccordingToCategory = [];
 
 if (selectedCategory === "") {
@@ -58,7 +58,7 @@ if (selectedCategory === "") {
     }
 const handleUpdateProduct=(productId)=>{
     if(productId){
-        console.log("id",productId);
+        // console.log("id",productId);
         const UpdateFormData=productData.filter(f=>f._id === productId)
         setUpdateFormData(UpdateFormData[0])
         toggleUpdateProductForm()
@@ -68,23 +68,23 @@ const handleUpdateProduct=(productId)=>{
 const NaviateToHistoryLog=(productId)=>{
 
   // const productId=e.target.value;
-  console.log("productId",productId)
+  // console.log("productId",productId)
   if(productId){
     const payload={
       product_id:productId
     }
     axios.post(`${import.meta.env.VITE_BACKEND_URL}/customlog`,payload).then(res=>{
         const LOGDATA=res?.data?.log
-        console.log(LOGDATA);
+        // console.log(LOGDATA);
         naviate('/log',{state:LOGDATA})
     }).catch(err=>console.log(err))
   }
 
 }
 const ChangeStockHandler=(productId,stockStatus)=>{
-   console.log(productId,stockStatus);
+  //  console.log(productId,stockStatus);
    const productName=productData.filter(f=>f._id === productId)
-   console.log(productName);
+  //  console.log(productName);
    setStockChangeFormData({
     productId:productId,
     productName:productName[0].name,

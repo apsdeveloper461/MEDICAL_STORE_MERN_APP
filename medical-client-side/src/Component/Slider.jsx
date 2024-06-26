@@ -22,7 +22,7 @@ function Slider() {
                 !prev
             )
         })
-        console.log(isFullSlider,border);
+        // console.log(isFullSlider,border);
     }
     return (
         <>

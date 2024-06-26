@@ -26,7 +26,7 @@ useEffect(() =>{
             arrayYear.push(parseInt(startYear++))
         }
         setyearsArrayFrom2024toCurrentYear(arrayYear)
-        console.log("Option Years", arrayYear);
+        // console.log("Option Years", arrayYear);
     }
 }, []);
     useEffect(() => {
@@ -58,7 +58,7 @@ useEffect(() =>{
                             }
                         ]
                     });
-                    console.log(productgrph);
+                    // console.log(productgrph);
                 } else {
                     console.error('Unexpected data format:', data);
                     setError('Unexpected data format');
@@ -75,7 +75,7 @@ useEffect(() =>{
         fetchData();
         }, [year]);
         const changeyear = (e) => {
-            console.log("e.target.value",e.target.value);
+            // console.log("e.target.value",e.target.value);
             // console.log("DataYearRef.current.value", DataYearRef.current.value);
             setYear(e.target.value)
         }
