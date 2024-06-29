@@ -13,11 +13,11 @@ const { stockHistoryModel } = require('./models/StockHistoryModel');
 const { productModel } = require('./models/productModel');
 
 app.use(express.json())
- app.use(cors())
-//  {
-//     origin:process.env.NODE_FRONTEND_URL,
-//     credentials:true
-//  }
+ app.use(cors(
+ {
+    origin:process.env.NODE_FRONTEND_URL,
+    credentials:true
+ }))
  //port 
  const PORT=process.env.NODE_PORT || 985
 
