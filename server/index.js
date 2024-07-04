@@ -14,7 +14,7 @@ const { productModel } = require('./models/productModel');
 
 app.use(express.json())
  app.use(cors( {
-    origin:"https://medical-store-mern-app.vercel.app",
+    // origin:"https://medical-store-mern-app.vercel.app",
     credentials:true
  }))
  //port 
