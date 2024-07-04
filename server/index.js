@@ -13,11 +13,7 @@ const { stockHistoryModel } = require('./models/StockHistoryModel');
 const { productModel } = require('./models/productModel');
 
 app.use(express.json())
- app.use(cors(
- {
-    // origin:"https://medical-store-mern-app.vercel.app",
-    credentials:true
- }))
+ app.use(cors())
  //port 
  const PORT=process.env.NODE_PORT || 985
 
