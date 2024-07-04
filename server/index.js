@@ -15,7 +15,7 @@ const { productModel } = require('./models/productModel');
 app.use(express.json())
  app.use(cors(
  {
-    origin:process.env.NODE_FRONTEND_URL,
+    // origin:process.env.NODE_FRONTEND_URL,
     credentials:true
  }))
  //port 
