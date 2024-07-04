@@ -124,7 +124,7 @@ const ProductSalesDetail = async (req, res) => {
 
         const today = new Date();
         const today_string = today.toISOString().slice(0, 10); // YYYY-MM-DD
-        const currentMonth = today.getMonth(); // get the current month (0-11)
+        const currentMonth = today.getMonth() + 1 ; // get the current month (0-11)
         const currentYear = today.getFullYear(); // get the current year
 
         const todaySales = await stockHistoryModel.aggregate([
@@ -144,19 +144,24 @@ const ProductSalesDetail = async (req, res) => {
             }
         ]);
         // console.log(todaySales)  
-        const MonthlySale = await stockHistoryModel.aggregate([
+         const MonthlySale = await stockHistoryModel.aggregate([
             {
                 $match: {
                     $expr: {
-                        $eq: [{ $month: "$timestamp" }, currentMonth],
-                        $eq: [{ $year: "$timestamp" }, currentYear]
+                        $and: [
+                            { $eq: [{ $month: "$timestamp" }, currentMonth] },
+                            { $eq: [{ $year: "$timestamp" }, currentYear] }
+                        ]
                     },
-                    change: { $lt: 0 }
+                    change: { $lt: 0 } // Ensures 'change' is negative
                 }
             },
             {
                 $group: {
-                    _id: null,
+                    _id: {
+                        month: { $month: "$timestamp" },
+                        year: { $year: "$timestamp" }
+                    },
                     totalSales: { $sum: "$sales" }
                 }
             }
